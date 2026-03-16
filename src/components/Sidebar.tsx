@@ -51,10 +51,10 @@ export function Sidebar({ userRole, signOut }: SidebarProps) {
               to={item.href}
               className={({ isActive }) =>
                 cn(
-                  'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                  'flex items-center px-3 py-2 text-sm rounded-md transition-colors',
                   isActive
-                    ? 'bg-indigo-500/10 text-indigo-400'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                    ? 'bg-indigo-500/20 text-white font-bold'
+                    : 'text-slate-400 font-medium hover:bg-slate-800 hover:text-white'
                 )
               }
             >
