@@ -1,0 +1,14 @@
+{
+  "version": "1",
+  "auth": {
+    "user_pool_id": "us-west-2_mock",
+    "user_pool_client_id": "mock_client",
+    "aws_region": "us-west-2"
+  },
+  "data": {
+    "url": "https://mock.appsync-api.us-west-2.amazonaws.com/graphql",
+    "aws_region": "us-west-2",
+    "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
+    "authorization_types": ["AMAZON_COGNITO_USER_POOLS"]
+  }
+}

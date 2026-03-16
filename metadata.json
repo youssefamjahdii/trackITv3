@@ -1,0 +1,5 @@
+{
+  "name": "TrackIT",
+  "description": "Enterprise AI Reporting Platform using AWS Amplify Gen 2 and Amazon Bedrock.",
+  "requestFramePermissions": []
+}
