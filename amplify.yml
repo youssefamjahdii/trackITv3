@@ -3,8 +3,7 @@ backend:
   phases:
     build:
       commands:
-        - npm ci --cache .npm --prefer-offline
-        # Add the bedrock-runtime package here:
+        - npm install
         - npm install aws-cdk-lib constructs @aws-amplify/backend @aws-sdk/client-bedrock-runtime
         - npm install -g @aws-amplify/backend-cli --force
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
@@ -12,7 +11,7 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci --cache .npm --prefer-offline
+        - npm install
     build:
       commands:
         - npm run build
