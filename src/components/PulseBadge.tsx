@@ -9,9 +9,9 @@ interface PulseBadgeProps {
 
 export function PulseBadge({ status, className }: PulseBadgeProps) {
   const styles = {
-    HEALTHY: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-    WARNING: 'bg-amber-100 text-amber-800 border-amber-200',
-    CRITICAL: 'bg-rose-100 text-rose-800 border-rose-200',
+    HEALTHY: 'bg-[#f2f8f2] text-[#1d8102] border-[#1d8102]',
+    WARNING: 'bg-[#fdf3e1] text-[#d13212] border-[#d13212]',
+    CRITICAL: 'bg-[#fdf3e1] text-[#d13212] border-[#d13212]',
   };
 
   const labels = {
@@ -23,7 +23,7 @@ export function PulseBadge({ status, className }: PulseBadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border',
+        'inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium border',
         styles[status],
         className
       )}
@@ -31,9 +31,9 @@ export function PulseBadge({ status, className }: PulseBadgeProps) {
       <span
         className={cn(
           'w-1.5 h-1.5 rounded-full mr-1.5',
-          status === 'HEALTHY' && 'bg-emerald-500',
-          status === 'WARNING' && 'bg-amber-500',
-          status === 'CRITICAL' && 'bg-rose-500'
+          status === 'HEALTHY' && 'bg-[#1d8102]',
+          status === 'WARNING' && 'bg-[#d13212]',
+          status === 'CRITICAL' && 'bg-[#d13212]'
         )}
       />
       {labels[status]}

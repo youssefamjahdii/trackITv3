@@ -1,77 +1,61 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, CheckSquare, LogOut, Activity, PieChart, BrainCircuit } from 'lucide-react';
+import { ChevronLeft } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 interface SidebarProps {
   userRole: 'Director' | 'Manager';
-  signOut: () => void;
 }
 
-export function Sidebar({ userRole, signOut }: SidebarProps) {
+export function Sidebar({ userRole }: SidebarProps) {
   const navItems = [
     {
       name: 'Dashboard',
       href: '/dashboard',
-      icon: PieChart,
-      roles: ['Director'],
+      isSub: false,
     },
     {
       name: 'Global Timeline',
       href: '/timeline',
-      icon: LayoutDashboard,
-      roles: ['Director'],
+      isSub: false,
     },
     {
       name: 'Strategy AI',
       href: '/strategy-ai',
-      icon: BrainCircuit,
-      roles: ['Director'],
+      isSub: false,
     },
     {
       name: 'Weekly Check-in',
       href: '/manager',
-      icon: CheckSquare,
-      roles: ['Manager', 'Director'], // Directors might also manage projects
+      isSub: false,
     },
   ];
 
   return (
-    <div className="flex flex-col w-64 bg-slate-900 border-r border-slate-800 h-screen sticky top-0">
-      <div className="flex items-center h-16 px-6 border-b border-slate-800">
-        <Activity className="w-6 h-6 text-indigo-400 mr-2" />
-        <span className="text-lg font-bold text-white tracking-tight">TrackIT</span>
+    <div className="flex flex-col w-56 bg-white border-r border-gray-200 h-full overflow-y-auto">
+      <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200">
+        <span className="font-bold text-sm text-gray-900">trackIT</span>
+        <ChevronLeft className="w-4 h-4 text-gray-500" />
       </div>
-
-      <div className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-        {navItems
-          .filter((item) => item.roles.includes(userRole))
-          .map((item) => (
+      <div className="flex-1 py-2 overflow-y-auto">
+        <div className="space-y-1">
+          {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.href}
               className={({ isActive }) =>
                 cn(
-                  'flex items-center px-3 py-2 text-sm rounded-md transition-colors',
+                  'block px-4 py-1.5 text-sm transition-colors whitespace-pre-line',
+                  item.isSub ? 'pl-8' : '',
                   isActive
-                    ? 'bg-indigo-500/20 text-white font-bold'
-                    : 'text-slate-400 font-medium hover:bg-slate-800 hover:text-white'
+                    ? 'text-[#0972d3] font-bold'
+                    : 'text-gray-600 font-normal hover:text-gray-900'
                 )
               }
             >
-              <item.icon className="w-5 h-5 mr-3 flex-shrink-0" />
               {item.name}
             </NavLink>
           ))}
-      </div>
-
-      <div className="p-4 border-t border-slate-800">
-        <button
-          onClick={signOut}
-          className="flex items-center w-full px-3 py-2 text-sm font-medium text-slate-400 rounded-md hover:bg-slate-800 hover:text-white transition-colors"
-        >
-          <LogOut className="w-5 h-5 mr-3 flex-shrink-0" />
-          Sign Out
-        </button>
+        </div>
       </div>
     </div>
   );

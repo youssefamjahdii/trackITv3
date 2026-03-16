@@ -5,10 +5,10 @@ import { cn } from '../utils/cn';
 import { ProjectDetailsModal } from '../components/ProjectDetailsModal';
 
 const COLORS = {
-  'Planning': '#8b5cf6', // violet
-  'Active': '#3b82f6',   // blue
-  'At Risk': '#f59e0b',  // amber
-  'Completed': '#10b981' // emerald
+  'Planning': '#545b64', // gray
+  'Active': '#0972d3',   // blue
+  'At Risk': '#d13212',  // red/orange
+  'Completed': '#1d8102' // green
 };
 
 export default function ExecutiveDashboard() {
@@ -40,34 +40,34 @@ export default function ExecutiveDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Executive Dashboard</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-bold text-[#16191f]">Executive Dashboard</h1>
+        <p className="mt-1 text-sm text-[#545b64]">
           High-level overview of portfolio health, financial allocation, and project status.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Financial Allocation Chart */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4">Financial Allocation</h2>
+        <div className="bg-white p-5 rounded-sm shadow-sm border border-[#eaeded]">
+          <h2 className="text-lg font-semibold text-[#16191f] mb-4">Financial Allocation</h2>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={financialData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
-                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} tickFormatter={(value) => `$${value / 1000}k`} />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#545b64', fontSize: 12 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#545b64', fontSize: 12 }} tickFormatter={(value) => `$${value / 1000}k`} />
                 <Tooltip cursor={{ fill: '#f8fafc' }} formatter={(value: number) => `$${value.toLocaleString()}`} />
                 <Legend iconType="circle" />
-                <Bar dataKey="Budget" fill="#cbd5e1" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Spent" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Budget" fill="#cbd5e1" radius={[2, 2, 0, 0]} />
+                <Bar dataKey="Spent" fill="#0972d3" radius={[2, 2, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Portfolio Composition */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-          <h2 className="text-lg font-semibold text-slate-900 mb-4">Portfolio Composition</h2>
+        <div className="bg-white p-5 rounded-sm shadow-sm border border-[#eaeded]">
+          <h2 className="text-lg font-semibold text-[#16191f] mb-4">Portfolio Composition</h2>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -94,7 +94,7 @@ export default function ExecutiveDashboard() {
 
       {/* Project Cards Grid */}
       <div>
-        <h2 className="text-lg font-semibold text-slate-900 mb-4">Project Summaries</h2>
+        <h2 className="text-lg font-semibold text-[#16191f] mb-4">Project Summaries</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map(project => {
             const utilization = project.budget > 0 ? (project.spent / project.budget) * 100 : 0;
@@ -104,39 +104,39 @@ export default function ExecutiveDashboard() {
               <div 
                 key={project.id} 
                 onClick={() => setSelectedProject(project)}
-                className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer flex flex-col"
+                className="bg-white p-5 rounded-sm shadow-sm border border-[#eaeded] hover:shadow-md hover:border-[#0972d3] transition-all cursor-pointer flex flex-col"
               >
                 <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-semibold text-slate-900 line-clamp-1" title={project.name}>{project.name}</h3>
+                  <h3 className="font-semibold text-[#16191f] line-clamp-1" title={project.name}>{project.name}</h3>
                   <span className={cn(
-                    "text-xs font-medium px-2 py-1 rounded-full whitespace-nowrap ml-2",
-                    project.status === 'Planning' && "bg-violet-100 text-violet-800",
-                    project.status === 'Active' && "bg-blue-100 text-blue-800",
-                    project.status === 'At Risk' && "bg-amber-100 text-amber-800",
-                    project.status === 'Completed' && "bg-emerald-100 text-emerald-800"
+                    "text-xs font-medium px-2 py-1 rounded-sm whitespace-nowrap ml-2",
+                    project.status === 'Planning' && "bg-[#f2f3f3] text-[#545b64]",
+                    project.status === 'Active' && "bg-[#f2f8fd] text-[#0972d3]",
+                    project.status === 'At Risk' && "bg-[#fdf3e1] text-[#d13212]",
+                    project.status === 'Completed' && "bg-[#f2f8f2] text-[#1d8102]"
                   )}>
                     {project.status}
                   </span>
                 </div>
                 
-                <p className="text-sm text-slate-500 line-clamp-2 mb-4 flex-1">
+                <p className="text-sm text-[#545b64] line-clamp-2 mb-4 flex-1">
                   {project.goal}
                 </p>
 
                 <div className="mt-auto">
                   <div className="flex justify-between text-xs mb-1.5">
-                    <span className="text-slate-500 font-medium">Budget Utilization</span>
-                    <span className={cn("font-bold", isOverBudget ? "text-red-600" : "text-slate-700")}>
+                    <span className="text-[#545b64] font-medium">Budget Utilization</span>
+                    <span className={cn("font-bold", isOverBudget ? "text-[#d13212]" : "text-[#16191f]")}>
                       {utilization.toFixed(1)}%
                     </span>
                   </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                  <div className="w-full bg-[#eaeded] rounded-sm h-2 overflow-hidden">
                     <div 
-                      className={cn("h-2 rounded-full", isOverBudget ? "bg-red-500" : "bg-indigo-500")}
+                      className={cn("h-2 rounded-sm", isOverBudget ? "bg-[#d13212]" : "bg-[#0972d3]")}
                       style={{ width: `${Math.min(utilization, 100)}%` }}
                     />
                   </div>
-                  <div className="flex justify-between text-xs mt-2 text-slate-500">
+                  <div className="flex justify-between text-xs mt-2 text-[#545b64]">
                     <span>Spent: ${project.spent.toLocaleString()}</span>
                     <span>Budget: ${project.budget.toLocaleString()}</span>
                   </div>

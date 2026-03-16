@@ -31,6 +31,8 @@ export default function ManagerDashboard() {
   const [projects, setProjects] = useState<any[]>([]);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [notes, setNotes] = useState('');
+  const [risks, setRisks] = useState('');
+  const [status, setStatus] = useState('HEALTHY');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -66,6 +68,8 @@ export default function ManagerDashboard() {
       
       setSubmitSuccess(true);
       setNotes('');
+      setRisks('');
+      setStatus('HEALTHY');
       
       // Reset success message after 3 seconds
       setTimeout(() => setSubmitSuccess(false), 3000);
@@ -79,20 +83,20 @@ export default function ManagerDashboard() {
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Weekly Check-in</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-bold text-[#16191f]">Weekly Check-in</h1>
+        <p className="mt-1 text-sm text-[#545b64]">
           Submit your weekly progress report. The AI Auditor will review this against your project goals.
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-6 border-b border-slate-100 bg-slate-50/50">
-          <label htmlFor="project-select" className="block text-sm font-medium text-slate-700 mb-2">
+      <div className="bg-white rounded-sm shadow-sm border border-[#eaeded] overflow-hidden">
+        <div className="p-6 border-b border-[#eaeded] bg-[#f2f3f3]">
+          <label htmlFor="project-select" className="block text-sm font-medium text-[#16191f] mb-2">
             Select Active Project
           </label>
           <select
             id="project-select"
-            className="block w-full rounded-lg border-slate-300 py-3 pl-4 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm bg-white shadow-sm"
+            className="block w-full rounded-sm border-[#879596] py-3 pl-4 pr-10 text-base focus:border-[#0972d3] focus:outline-none focus:ring-[#0972d3] sm:text-sm bg-white shadow-sm"
             value={selectedProject?.id || ''}
             onChange={(e) => {
               const proj = projects.find(p => p.id === e.target.value);
@@ -106,10 +110,10 @@ export default function ManagerDashboard() {
           </select>
 
           {selectedProject && (
-            <div className="mt-4 flex items-center justify-between p-4 bg-white rounded-lg border border-slate-200">
+            <div className="mt-4 flex items-center justify-between p-4 bg-white rounded-sm border border-[#eaeded]">
               <div>
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">Project Goal</span>
-                <p className="text-sm text-slate-900">{selectedProject.goal}</p>
+                <span className="text-xs font-semibold text-[#545b64] uppercase tracking-wider block mb-1">Project Goal</span>
+                <p className="text-sm text-[#16191f]">{selectedProject.goal}</p>
               </div>
               <PulseBadge status={selectedProject.pulseStatus} className="ml-4 flex-shrink-0" />
             </div>
@@ -118,30 +122,66 @@ export default function ManagerDashboard() {
 
         <div className="p-6">
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="notes" className="block text-sm font-medium text-slate-700 mb-2 flex items-center">
-                <FileText className="w-4 h-4 mr-2 text-slate-400" />
-                What did you accomplish this week?
-              </label>
-              <textarea
-                id="notes"
-                rows={6}
-                className="block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-4 resize-none transition-colors"
-                placeholder="Be specific. Focus on facts, completed milestones, and blockers..."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                disabled={!selectedProject || isSubmitting}
-              />
-              <p className="mt-2 text-xs text-slate-500 flex items-center">
-                <AlertCircle className="w-3.5 h-3.5 mr-1" />
-                Keep it objective. The AI Auditor will grade this against the project goal.
-              </p>
+            <div className="space-y-5">
+              <div>
+                <label htmlFor="status" className="block text-sm font-medium text-[#16191f] mb-2">
+                  Current Project Status
+                </label>
+                <select
+                  id="status"
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value)}
+                  disabled={!selectedProject || isSubmitting}
+                  className="block w-full rounded-sm border-[#879596] py-2.5 pl-3 pr-10 text-base focus:border-[#0972d3] focus:outline-none focus:ring-[#0972d3] sm:text-sm bg-white shadow-sm"
+                >
+                  <option value="HEALTHY">Healthy / On Track</option>
+                  <option value="AT_RISK">At Risk</option>
+                  <option value="CRITICAL">Critical / Off Track</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="notes" className="block text-sm font-medium text-[#16191f] mb-2 flex items-center">
+                  <FileText className="w-4 h-4 mr-2 text-[#545b64]" />
+                  What did you accomplish this week?
+                </label>
+                <textarea
+                  id="notes"
+                  rows={4}
+                  className="block w-full rounded-sm border-[#879596] shadow-sm focus:border-[#0972d3] focus:ring-[#0972d3] sm:text-sm p-3 resize-none transition-colors"
+                  placeholder="Be specific. Focus on facts and completed milestones..."
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  disabled={!selectedProject || isSubmitting}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="risks" className="block text-sm font-medium text-[#16191f] mb-2 flex items-center">
+                  <AlertCircle className="w-4 h-4 mr-2 text-[#545b64]" />
+                  Risks & Blockers
+                </label>
+                <textarea
+                  id="risks"
+                  rows={3}
+                  className="block w-full rounded-sm border-[#879596] shadow-sm focus:border-[#0972d3] focus:ring-[#0972d3] sm:text-sm p-3 resize-none transition-colors"
+                  placeholder="Identify any risks, blockers, or dependencies..."
+                  value={risks}
+                  onChange={(e) => setRisks(e.target.value)}
+                  disabled={!selectedProject || isSubmitting}
+                />
+              </div>
             </div>
 
-            <div className="flex items-center justify-between pt-4 border-t border-slate-100">
+            <p className="mt-2 text-xs text-[#545b64] flex items-center">
+              <AlertCircle className="w-3.5 h-3.5 mr-1 flex-shrink-0" />
+              Keep it objective. The AI Auditor will grade this against the project goal.
+            </p>
+
+            <div className="flex items-center justify-between pt-4 border-t border-[#eaeded]">
               <div className="text-sm">
                 {submitSuccess && (
-                  <span className="flex items-center text-emerald-600 font-medium animate-in fade-in slide-in-from-bottom-2">
+                  <span className="flex items-center text-[#1d8102] font-medium animate-in fade-in slide-in-from-bottom-2">
                     <CheckCircle2 className="w-5 h-5 mr-2" />
                     Report submitted successfully
                   </span>
@@ -152,10 +192,10 @@ export default function ManagerDashboard() {
                 type="submit"
                 disabled={!selectedProject || !notes.trim() || isSubmitting}
                 className={cn(
-                  "inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-xl shadow-sm text-white transition-all duration-200",
+                  "inline-flex items-center px-6 py-3 border border-transparent text-sm font-medium rounded-sm shadow-sm text-white transition-all duration-200",
                   !selectedProject || !notes.trim() || isSubmitting
-                    ? "bg-slate-300 cursor-not-allowed"
-                    : "bg-indigo-600 hover:bg-indigo-700 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    ? "bg-[#eaeded] text-[#545b64] cursor-not-allowed"
+                    : "bg-[#0972d3] hover:bg-[#005299] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0972d3]"
                 )}
               >
                 {isSubmitting ? (

@@ -20,7 +20,7 @@ export default function App() {
     <BrowserRouter>
       <Layout userRole={userRole} signOut={handleSignOut}>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/timeline" replace />} />
           <Route path="/dashboard" element={<ExecutiveDashboard />} />
           <Route path="/timeline" element={<DirectorDashboard />} />
           <Route path="/strategy-ai" element={<StrategyAI />} />

@@ -66,91 +66,95 @@ export function CreateProjectModal({ isOpen, onClose, onSuccess }: CreateProject
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
-        <div className="flex items-center justify-between p-6 border-b border-slate-100">
-          <h2 className="text-xl font-bold text-slate-900">Create New Project</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#16191f]/50 backdrop-blur-sm p-4">
+      <div className="bg-white rounded-sm shadow-md w-full max-w-lg overflow-y-auto max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
+        <div className="sticky top-0 z-10 bg-white flex items-center justify-between p-6 border-b border-[#eaeded]">
+          <h2 className="text-xl font-bold text-[#16191f]">Create New Project</h2>
           <button 
             onClick={onClose} 
-            className="text-slate-400 hover:text-slate-600 transition-colors rounded-full p-1 hover:bg-slate-100"
+            className="text-[#545b64] hover:text-[#16191f] transition-colors rounded-sm p-1 hover:bg-[#f2f3f3]"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
         
-        <div className="p-6 overflow-y-auto flex-1">
+        <div className="p-6">
           <form id="create-project-form" onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Project Name</label>
+              <label className="block text-sm font-medium text-[#16191f] mb-1">Project Name</label>
               <input 
                 required 
                 type="text" 
                 value={name} 
                 onChange={e => setName(e.target.value)} 
-                className="w-full rounded-lg border-slate-300 py-2.5 px-3 border focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all sm:text-sm" 
+                className="w-full rounded-sm border-[#879596] py-2.5 px-3 border focus:ring-2 focus:ring-[#0972d3] focus:border-[#0972d3] outline-none transition-all sm:text-sm" 
                 placeholder="e.g. Project Delta" 
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Goal</label>
+              <label className="block text-sm font-medium text-[#16191f] mb-1">Goal</label>
               <textarea 
                 required 
                 value={goal} 
                 onChange={e => setGoal(e.target.value)} 
                 rows={3} 
-                className="w-full rounded-lg border-slate-300 py-2.5 px-3 border focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all resize-none sm:text-sm" 
+                className="w-full rounded-sm border-[#879596] py-2.5 px-3 border focus:ring-2 focus:ring-[#0972d3] focus:border-[#0972d3] outline-none transition-all resize-none sm:text-sm" 
                 placeholder="What is the objective?" 
               />
             </div>
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Deadline</label>
+                <label className="block text-sm font-medium text-[#16191f] mb-1">Deadline</label>
                 <input 
                   required 
                   type="date" 
                   value={deadline} 
                   onChange={e => setDeadline(e.target.value)} 
-                  className="w-full rounded-lg border-slate-300 py-2.5 px-3 border focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all sm:text-sm" 
+                  className="w-full rounded-sm border-[#879596] py-2.5 px-3 border focus:ring-2 focus:ring-[#0972d3] focus:border-[#0972d3] outline-none transition-all sm:text-sm" 
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Budget ($)</label>
+                <label className="block text-sm font-medium text-[#16191f] mb-1">Budget ($)</label>
                 <input 
                   type="number" 
                   min="0" 
                   step="0.01" 
                   value={budget} 
                   onChange={e => setBudget(e.target.value)} 
-                  className="w-full rounded-lg border-slate-300 py-2.5 px-3 border focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all sm:text-sm" 
+                  className="w-full rounded-sm border-[#879596] py-2.5 px-3 border focus:ring-2 focus:ring-[#0972d3] focus:border-[#0972d3] outline-none transition-all sm:text-sm" 
                   placeholder="0.00" 
                 />
               </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Manager (Owner ID)</label>
-              <input 
+              <label className="block text-sm font-medium text-[#16191f] mb-1">Manager (Owner ID)</label>
+              <select 
                 required 
-                type="text" 
                 value={ownerId} 
                 onChange={e => setOwnerId(e.target.value)} 
-                className="w-full rounded-lg border-slate-300 py-2.5 px-3 border focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all sm:text-sm" 
-                placeholder="e.g. manager-123" 
-              />
-              <p className="mt-1.5 text-xs text-slate-500">
+                className="w-full rounded-sm border-[#879596] py-2.5 px-3 border focus:ring-2 focus:ring-[#0972d3] focus:border-[#0972d3] outline-none transition-all sm:text-sm bg-white" 
+              >
+                <option value="" disabled>Select a manager...</option>
+                <option value="manager-1">Alice Smith (manager-1)</option>
+                <option value="manager-2">Bob Jones (manager-2)</option>
+                <option value="manager-3">Charlie Davis (manager-3)</option>
+                <option value="manager-4">Diana Prince (manager-4)</option>
+              </select>
+              <p className="mt-1.5 text-xs text-[#545b64]">
                 The Cognito sub or username of the manager who will submit weekly reports.
               </p>
             </div>
           </form>
         </div>
 
-        <div className="p-6 border-t border-slate-100 bg-slate-50 flex justify-end space-x-3">
+        <div className="sticky bottom-0 z-10 p-6 border-t border-[#eaeded] bg-[#f2f3f3] flex justify-end space-x-3">
           <button 
             type="button" 
             onClick={onClose} 
-            className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="px-4 py-2 text-sm font-medium text-[#16191f] bg-white border border-[#879596] rounded-sm hover:bg-[#f2f3f3] transition-colors"
           >
             Cancel
           </button>
@@ -158,7 +162,7 @@ export function CreateProjectModal({ isOpen, onClose, onSuccess }: CreateProject
             type="submit" 
             form="create-project-form" 
             disabled={isSubmitting} 
-            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-[#0972d3] border border-transparent rounded-sm hover:bg-[#005299] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
           >
             {isSubmitting && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
             Create Project
